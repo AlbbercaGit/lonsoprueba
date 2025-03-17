@@ -47,7 +47,7 @@ export default function Home() {
       <main className="flex-1 flex flex-col">
         <section className="relative h-[90vh] w-full">
           <Image
-            src="/lonso3.jpg"
+            src="https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/lonso3.jpg"
             alt="Featured photograph"
             fill
             priority
@@ -116,19 +116,19 @@ const featuredCollections = [
     title: "URBAN NOSTALGIA",
     description: "City landscapes with a vintage touch",
     slug: "shadows-and-light",
-    coverImage: "/lonso7.jpg",
+    coverImage: "https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/lonso7.jpg",
   },
   {
     title: "ANALOG DREAMS",
     description: "Film photography series",
     slug: "analog-memories",
-    coverImage: "/lonso6.jpg",
+    coverImage: "https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/lonso6.jpg",
   },
   {
     title: "TIMELESS PORTRAITS",
     description: "Character studies across generations",
     slug: "urban-textures",
-    coverImage: "/lonso4.jpg",
+    coverImage: "https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/lonso4.jpg",
   },
 ]
 
