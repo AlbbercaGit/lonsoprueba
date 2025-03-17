@@ -53,7 +53,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
             <div className="relative aspect-[3/4] w-full">
               <Image
-                src="/me.jpg"
+                src="https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/me.jpg"
                 alt="Photographer portrait"
                 fill
                 className="object-cover"
