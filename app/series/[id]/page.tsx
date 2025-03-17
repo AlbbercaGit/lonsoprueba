@@ -3,47 +3,28 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 
 interface SeriesPageProps {
-  series: {
+  params: {
     id: string
-    title: string
-    description: string
-    fullDescription: string
-    year: string
-    count: number
-    featuredImage: string
-    images: {
-      src: string
-      alt: string
-      caption: string
-    }[]
   }
 }
 
-export async function getStaticPaths() {
-  const paths = photoSeries.map((series) => ({
-    params: { id: series.id },
+// Esta función se llama para generar las rutas estáticas durante la compilación
+export async function generateStaticParams() {
+  // Utilizas la misma data estática que ya tienes, puedes adaptarlo si quieres obtener los datos desde una API
+  return photoSeries.map((series) => ({
+    id: series.id, // El id debe coincidir con el parámetro dinámico en la ruta
   }))
-
-  return {
-    paths,
-    fallback: false, // No renderiza páginas no generadas
-  }
 }
 
-export async function getStaticProps({ params }: { params: { id: string } }) {
+export default function SeriesDetailPage({ params }: SeriesPageProps) {
+  // Find the series by ID
   const series = photoSeries.find((s) => s.id === params.id)
 
-  // Si la serie no se encuentra, devuelve 404
+  // If series not found, show 404
   if (!series) {
-    return { notFound: true }
+    notFound()
   }
 
-  return {
-    props: { series },
-  }
-}
-
-export default function SeriesDetailPage({ series }: SeriesPageProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="py-6 px-6 md:px-12 flex justify-between items-center">
@@ -139,7 +120,7 @@ export default function SeriesDetailPage({ series }: SeriesPageProps) {
           <h3 className="text-xl font-light tracking-wider mb-8">OTHER SERIES</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {photoSeries
-              .filter((s) => s.id !== series.id)
+              .filter((s) => s.id !== params.id)
               .slice(0, 3)
               .map((otherSeries) => (
                 <Link href={`/series/${otherSeries.id}`} key={otherSeries.id} className="group">
@@ -179,6 +160,7 @@ export default function SeriesDetailPage({ series }: SeriesPageProps) {
   )
 }
 
+// This data would typically come from a CMS or API
 const photoSeries = [
   {
     id: "shadows-and-light",
