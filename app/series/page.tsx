@@ -63,7 +63,7 @@ export default function SeriesPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="relative aspect-[3/2] w-full ">
                   <Image
-                    src={series.featuredImage || "/placeholder.svg"}
+                    src={`https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${series.featuredImage}`}
                     alt={`Featured image from ${series.title}`}
                     fill
                     className="object-cover"
@@ -74,7 +74,7 @@ export default function SeriesPage() {
                   {series.previewImages.map((image, index) => (
                     <div key={index} className="relative aspect-square w-full">
                       <Image
-                        src={image || "/placeholder.svg"}
+                        src={`https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${image}`}
                         alt={`Preview image ${index + 1} from ${series.title}`}
                         fill
                         className="object-cover"
@@ -160,4 +160,3 @@ const photoSeries = [
     ],
   },
 ]
-
