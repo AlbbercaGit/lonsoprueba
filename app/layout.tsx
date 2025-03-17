@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "Retro Lens Studio | Photography Portfolio",
+  title: "Lonso.jpg | Photography Portfolio",
   description: "A minimalist photography portfolio with retro aesthetics",
     generator: 'v0.dev'
 }

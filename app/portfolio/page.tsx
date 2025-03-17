@@ -54,7 +54,7 @@ export default function PortfolioPage() {
             <div key={category.id} className="scroll-mt-24" id={category.id}>
               <div className="relative aspect-[21/9] w-full mb-8">
                 <Image
-                  src={category.image || "/placeholder.svg"}
+                  src={`https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${category.image || "/placeholder.svg"}`}
                   alt={category.title}
                   fill
                   className="object-cover"
@@ -72,7 +72,7 @@ export default function PortfolioPage() {
                   <div key={index} className="group">
                     <div className="relative aspect-square overflow-hidden">
                       <Image
-                        src={photo.src || "/placeholder.svg"}
+                        src={`https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${photo.src || "/placeholder.svg"}`}
                         alt={photo.alt}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -148,4 +148,3 @@ const categories = [
     ],
   },
 ]
-
