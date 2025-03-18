@@ -11,7 +11,7 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
 
-  // Prevent hydration mismatch
+  // Evita errores de hidratación en SSR
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -26,14 +26,14 @@ export default function Navigation() {
   ]
 
   return (
-    <header className="py-6 px-6 md:px-12 flex justify-between items-center max-2xl:fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm">
+    <header className="py-6 px-6 md:px-12 flex justify-between items-center  top-0 left-0 right-0 z-50 bg-white">
       <div>
         <h1 className="text-xl md:text-2xl font-light tracking-widest uppercase">
           <Link href="/">Lonso.jpg</Link>
         </h1>
       </div>
 
-      <nav className="hidden md:flex space-x-8 relative ">
+      <nav className="hidden md:flex space-x-8 relative">
         {links.map((link) => (
           <Link
             key={link.href}
@@ -54,7 +54,7 @@ export default function Navigation() {
         ))}
       </nav>
 
-      <button className="md:hidden flex flex-col space-y-2 " onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
+      <button className="md:hidden flex flex-col space-y-2" onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
         <div className="w-6 h-[1px] bg-black"></div>
         <div className="w-6 h-[1px] bg-black"></div>
       </button>
@@ -62,13 +62,13 @@ export default function Navigation() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 bg-white z-50 flex flex-col p-6 "
+            className="fixed inset-0 bg-white z-[100] flex flex-col p-6"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="flex justify-between items-center mb-12 ">
+            <div className="flex justify-between items-center mb-12">
               <h1 className="text-xl font-light tracking-widest uppercase">
                 <Link href="/" onClick={() => setIsMenuOpen(false)}>
                   Lonso.jpg
@@ -78,7 +78,7 @@ export default function Navigation() {
                 <X size={24} />
               </button>
             </div>
-            <nav className="flex flex-col space-y-6 bg-white">
+            <nav className="flex flex-col space-y-6">
               {links.map((link) => (
                 <Link
                   key={link.href}
@@ -104,4 +104,3 @@ export default function Navigation() {
     </header>
   )
 }
-

@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function Footer() {
   return (
-    <footer className="py-12 px-6 md:px-12 border-t border-neutral-200">
+    <footer className="py-12 px-6 md:px-12  ">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div className="mb-6 md:mb-0">
           <h2 className="text-lg font-light tracking-widest">Lonso.jpg</h2>
@@ -16,7 +16,7 @@ export default function Footer() {
           </Link>
         </div>
         <div className="mt-6 md:mt-0">
-          <p className="text-xs text-neutral-500">© {new Date().getFullYear()} All Rights Reserved</p>
+          <p className="text-xs text-neutral-500">© {new Date().getFullYear()} Design by Min.</p>
         </div>
       </div>
     </footer>
