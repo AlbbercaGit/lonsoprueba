@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
      
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/favicon.ico" />
   
       <body className={`${inter.className} antialiased `}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
