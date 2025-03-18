@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image"
-import Link from "next/link"
+import { motion } from "framer-motion"
+import PageTransition from "@/components/page-transition"
 
 export default function PortfolioPage() {
   // Función para construir la URL de GitHub para las imágenes
@@ -7,108 +10,92 @@ export default function PortfolioPage() {
     return `https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${path}`
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  }
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="py-6 px-6 md:px-12 flex justify-between items-center">
-        <div>
-          <h1 className="text-xl md:text-2xl font-light tracking-widest uppercase">
-            <Link href="/">Lonso.jpg</Link>
-          </h1>
-        </div>
-        <nav className="hidden md:flex space-x-8">
-          <Link
-            href="/portfolio"
-            className="text-sm tracking-wider hover:text-neutral-500 transition-colors border-b border-black pb-1"
+    <PageTransition>
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-1 py-12 px-6 md:px-12">
+          <motion.h2
+            className="text-3xl font-light tracking-wider text-center mb-16"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            Portfolio
-          </Link>
-          <Link href="/series" className="text-sm tracking-wider hover:text-neutral-500 transition-colors">
-            Series
-          </Link>
-          <Link href="/about" className="text-sm tracking-wider hover:text-neutral-500 transition-colors">
-            About
-          </Link>
-          <Link href="/contact" className="text-sm tracking-wider hover:text-neutral-500 transition-colors">
-            Contact
-          </Link>
-        </nav>
-        <button className="md:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-      </header>
+            PORTFOLIO
+          </motion.h2>
 
-      <main className="flex-1 py-12 px-6 md:px-12">
-        <h2 className="text-3xl font-light tracking-wider text-center mb-16">PORTFOLIO</h2>
-
-        <div className="grid grid-cols-1 gap-24">
-          {categories.map((category) => (
-            <div key={category.id} className="scroll-mt-24" id={category.id}>
-              <div className="relative aspect-[21/9] w-full mb-8">
-                <Image
-                  src={getGitHubImageUrl(category.image) || "/placeholder.svg"}
-                  alt={category.title}
-                  fill
-                  className="object-cover"
-                  sizes="100vw"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="border border-white px-8 py-3 text-white tracking-widest bg-black/30 backdrop-blur-sm">
-                    {category.title}
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {category.photos.map((photo, index) => (
-                  <div key={index} className="group">
-                    <div className="relative aspect-square overflow-hidden">
-                      <Image
-                        src={getGitHubImageUrl(photo.src) || "/placeholder.svg"}
-                        alt={photo.alt}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
+          <div className="grid grid-cols-1 gap-24">
+            {categories.map((category) => (
+              <div key={category.id} className="scroll-mt-24" id={category.id}>
+                <motion.div
+                  className="relative aspect-[21/9] w-full mb-8"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <Image
+                    src={getGitHubImageUrl(category.image) || "/placeholder.svg"}
+                    alt={category.title}
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="border border-white px-8 py-3 text-white tracking-widest bg-black/30 backdrop-blur-sm">
+                      {category.title}
                     </div>
-                    <p className="mt-2 text-sm text-neutral-600">{photo.caption}</p>
                   </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
+                </motion.div>
 
-      <footer className="py-12 px-6 md:px-12 border-t border-neutral-200">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <h2 className="text-lg font-light tracking-widest">Lonso.jpg</h2>
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                  variants={containerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
+                  {category.photos.map((photo, index) => (
+                    <motion.div key={index} className="group" variants={itemVariants}>
+                      <div className="relative aspect-square overflow-hidden">
+                        <Image
+                          src={getGitHubImageUrl(photo.src) || "/placeholder.svg"}
+                          alt={photo.alt}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                      <p className="mt-2 text-sm text-neutral-600">{photo.caption}</p>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+            ))}
           </div>
-          <div className="flex space-x-6">
-            <Link href="https://www.instagram.com/lonso.jpg/" className="text-sm text-neutral-600 hover:text-black transition-colors">
-              Instagram
-            </Link>
-          </div>
-          <div className="mt-6 md:mt-0">
-            <p className="text-xs text-neutral-500">© {new Date().getFullYear()} All Rights Reserved</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+        </main>
+      </div>
+    </PageTransition>
   )
 }
 

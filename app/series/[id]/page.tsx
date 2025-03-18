@@ -1,21 +1,15 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { motion } from "framer-motion"
+import PageTransition from "@/components/page-transition"
 
 interface SeriesPageProps {
   params: {
     id: string
   }
-}
-
-// Añadir esta función justo antes de la definición de la función SeriesDetailPage
-
-export function generateStaticParams() {
-  // Devuelve un array de objetos con los valores de los parámetros
-  // que se usarán para pre-renderizar las páginas durante la compilación
-  return photoSeries.map((series) => ({
-    id: series.id,
-  }))
 }
 
 export default function SeriesDetailPage({ params }: SeriesPageProps) {
@@ -32,138 +26,138 @@ export default function SeriesDetailPage({ params }: SeriesPageProps) {
     return `https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${path}`
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  }
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="py-6 px-6 md:px-12 flex justify-between items-center">
-        <div>
-          <h1 className="text-xl md:text-2xl font-light tracking-widest uppercase">
-            <Link href="/">Lonso.jpg</Link>
-          </h1>
-        </div>
-        <nav className="hidden md:flex space-x-8">
-          <Link href="/portfolio" className="text-sm tracking-wider hover:text-neutral-500 transition-colors">
-            Portfolio
-          </Link>
-          <Link
-            href="/series"
-            className="text-sm tracking-wider hover:text-neutral-500 transition-colors border-b border-black pb-1"
+    <PageTransition>
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-1 py-12 px-6 md:px-12">
+          <motion.div
+            className="mb-12"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            Series
-          </Link>
-          <Link href="/about" className="text-sm tracking-wider hover:text-neutral-500 transition-colors">
-            About
-          </Link>
-          <Link href="/contact" className="text-sm tracking-wider hover:text-neutral-500 transition-colors">
-            Contact
-          </Link>
-        </nav>
-        <button className="md:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            <Link href="/series" className="text-sm text-neutral-600 hover:text-black transition-colors">
+              ← Back to Series
+            </Link>
+          </motion.div>
+
+          <motion.div
+            className="mb-16"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-      </header>
+            <h2 className="text-3xl font-light tracking-wider mb-4">{series.title}</h2>
+            <p className="text-neutral-600 max-w-3xl mb-4">{series.description}</p>
+            <div className="text-sm text-neutral-500">
+              {series.year} • {series.count} photographs
+            </div>
+          </motion.div>
 
-      <main className="flex-1 py-12 px-6 md:px-12">
-        <div className="mb-12">
-          <Link href="/series" className="text-sm text-neutral-600 hover:text-black transition-colors">
-            ← Back to Series
-          </Link>
-        </div>
+          <motion.div
+            className="relative aspect-[21/9] w-full mb-16"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <Image
+              src={getGitHubImageUrl(series.featuredImage) || "/placeholder.svg"}
+              alt={`Featured image from ${series.title}`}
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+            />
+          </motion.div>
 
-        <div className="mb-16">
-          <h2 className="text-3xl font-light tracking-wider mb-4">{series.title}</h2>
-          <p className="text-neutral-600 max-w-3xl mb-4">{series.description}</p>
-          <div className="text-sm text-neutral-500">
-            {series.year} • {series.count} photographs
-          </div>
-        </div>
+          <div className="mb-16">
+            <motion.p
+              className="text-neutral-700 max-w-3xl mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              {series.fullDescription}
+            </motion.p>
 
-        <div className="relative aspect-[21/9] w-full mb-16">
-          <Image
-            src={getGitHubImageUrl(series.featuredImage) || "/placeholder.svg"}
-            alt={`Featured image from ${series.title}`}
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
-
-        <div className="mb-16">
-          <p className="text-neutral-700 max-w-3xl mb-8">{series.fullDescription}</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {series.images.map((image, index) => (
-              <div key={index} className="group">
-                <div className="relative aspect-square overflow-hidden">
-                  <Image
-                    src={getGitHubImageUrl(image.src) || "/placeholder.svg"}
-                    alt={image.alt}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-                <p className="mt-2 text-sm text-neutral-600">{image.caption}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="border-t border-neutral-200 pt-12">
-          <h3 className="text-xl font-light tracking-wider mb-8">OTHER SERIES</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {photoSeries
-              .filter((s) => s.id !== params.id)
-              .slice(0, 3)
-              .map((otherSeries) => (
-                <Link href={`/series/${otherSeries.id}`} key={otherSeries.id} className="group">
-                  <div className="relative aspect-[4/3] overflow-hidden mb-4">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {series.images.map((image, index) => (
+                <motion.div key={index} className="group" variants={itemVariants}>
+                  <div className="relative aspect-square overflow-hidden">
                     <Image
-                      src={getGitHubImageUrl(otherSeries.featuredImage) || "/placeholder.svg"}
-                      alt={otherSeries.title}
+                      src={getGitHubImageUrl(image.src) || "/placeholder.svg"}
+                      alt={image.alt}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   </div>
-                  <h4 className="text-lg font-light tracking-wider">{otherSeries.title}</h4>
-                  <p className="text-sm text-neutral-600">{otherSeries.year}</p>
-                </Link>
+                  <p className="mt-2 text-sm text-neutral-600">{image.caption}</p>
+                </motion.div>
               ))}
+            </motion.div>
           </div>
-        </div>
-      </main>
 
-      <footer className="py-12 px-6 md:px-12 border-t border-neutral-200">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <h2 className="text-lg font-light tracking-widest">Lonso.jpg</h2>
-          </div>
-          <div className="flex space-x-6">
-            <Link href="https://www.instagram.com/lonso.jpg/" className="text-sm text-neutral-600 hover:text-black transition-colors">
-              Instagram
-            </Link>
-          </div>
-          <div className="mt-6 md:mt-0">
-            <p className="text-xs text-neutral-500">© {new Date().getFullYear()} All Rights Reserved</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+          <motion.div
+            className="border-t border-neutral-200 pt-12"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="text-xl font-light tracking-wider mb-8">OTHER SERIES</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {photoSeries
+                .filter((s) => s.id !== params.id)
+                .slice(0, 3)
+                .map((otherSeries) => (
+                  <motion.div key={otherSeries.id} whileHover={{ y: -5 }} transition={{ duration: 0.3 }}>
+                    <Link href={`/series/${otherSeries.id}`} className="group">
+                      <div className="relative aspect-[4/3] overflow-hidden mb-4">
+                        <Image
+                          src={getGitHubImageUrl(otherSeries.featuredImage) || "/placeholder.svg"}
+                          alt={otherSeries.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                        />
+                      </div>
+                      <h4 className="text-lg font-light tracking-wider">{otherSeries.title}</h4>
+                      <p className="text-sm text-neutral-600">{otherSeries.year}</p>
+                    </Link>
+                  </motion.div>
+                ))}
+            </div>
+          </motion.div>
+        </main>
+      </div>
+    </PageTransition>
   )
 }
 
