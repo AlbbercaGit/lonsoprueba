@@ -147,10 +147,13 @@ interface SeriesPageProps {
 // Change the page component to be async and await the params
 export default async function SeriesDetailPage({ params }: SeriesPageProps) {
   // Await the params before using them
-  const id = await params.id
+  // Espera a que params se resuelva
+  const resolvedParams = await params;
+  const id = resolvedParams.id; // Ahora puedes acceder a id
 
-  // Find the series by ID
-  const series = photoSeries.find((s) => s.id === id)
+  // Encuentra la serie por ID
+  const series = photoSeries.find((s) => s.id === id);
+
 
   // If series not found, show 404
   if (!series) {
