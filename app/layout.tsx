@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
   title: "Lonso.jpg | Photography Portfolio",
+  description: "Portfolio of Alonso Rosello",
 }
 
 export default function RootLayout({
@@ -18,6 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+     
+        <link rel="icon" href="/favicon.ico" />
+  
       <body className={`${inter.className} antialiased `}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <Navigation />
@@ -32,3 +36,4 @@ export default function RootLayout({
 
 
 import './globals.css'
+import { Head } from "react-day-picker"
