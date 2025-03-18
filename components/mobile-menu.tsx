@@ -77,8 +77,8 @@ export function MobileMenu() {
               Contact
             </Link>
           </nav>
-          <div className="mt-auto pt-6">
-            <div className="flex justify-center space-x-6">
+          <div className="mt-auto pt-6 ">
+            <div className="flex justify-center space-x-6 ">
               <Link href="#" className="text-neutral-600 hover:text-black transition-colors">
                 Instagram
               </Link>
