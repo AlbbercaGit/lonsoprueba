@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation"
 import SeriesDetailPageClient from "./SeriesDetailPageClient"
 
 // This data would typically come from a CMS or API
@@ -143,7 +144,19 @@ interface SeriesPageProps {
   }
 }
 
-export default function SeriesDetailPage({ params }: SeriesPageProps) {
-  return <SeriesDetailPageClient params={params} />
+// Change the page component to be async and await the params
+export default async function SeriesDetailPage({ params }: SeriesPageProps) {
+  // Await the params before using them
+  const id = await params.id
+
+  // Find the series by ID
+  const series = photoSeries.find((s) => s.id === id)
+
+  // If series not found, show 404
+  if (!series) {
+    notFound()
+  }
+
+  return <SeriesDetailPageClient params={{ id }} />
 }
 
