@@ -2,6 +2,11 @@ import Image from "next/image"
 import Link from "next/link"
 
 export default function PortfolioPage() {
+  // Función para construir la URL de GitHub para las imágenes
+  const getGitHubImageUrl = (path: string) => {
+    return `https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${path}`
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="py-6 px-6 md:px-12 flex justify-between items-center">
@@ -54,7 +59,7 @@ export default function PortfolioPage() {
             <div key={category.id} className="scroll-mt-24" id={category.id}>
               <div className="relative aspect-[21/9] w-full mb-8">
                 <Image
-                  src={`https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${category.image || "/placeholder.svg"}`}
+                  src={getGitHubImageUrl(category.image) || "/placeholder.svg"}
                   alt={category.title}
                   fill
                   className="object-cover"
@@ -72,7 +77,7 @@ export default function PortfolioPage() {
                   <div key={index} className="group">
                     <div className="relative aspect-square overflow-hidden">
                       <Image
-                        src={`https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${photo.src || "/placeholder.svg"}`}
+                        src={getGitHubImageUrl(photo.src) || "/placeholder.svg"}
                         alt={photo.alt}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -148,3 +153,4 @@ const categories = [
     ],
   },
 ]
+

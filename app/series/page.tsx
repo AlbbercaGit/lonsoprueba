@@ -2,12 +2,17 @@ import Image from "next/image"
 import Link from "next/link"
 
 export default function SeriesPage() {
+  // Función para construir la URL de GitHub para las imágenes
+  const getGitHubImageUrl = (path: string) => {
+    return `https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${path}`
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="py-6 px-6 md:px-12 flex justify-between items-center">
         <div>
           <h1 className="text-xl md:text-2xl font-light tracking-widest uppercase">
-            <Link href="/">Lonso.jpg</Link>
+            <Link href="/">Retro Lens Studio</Link>
           </h1>
         </div>
         <nav className="hidden md:flex space-x-8">
@@ -61,9 +66,9 @@ export default function SeriesPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="relative aspect-[3/2] w-full ">
+                <div className="relative aspect-[3/2] w-full">
                   <Image
-                    src={`https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${series.featuredImage}`}
+                    src={getGitHubImageUrl(series.featuredImage) || "/placeholder.svg"}
                     alt={`Featured image from ${series.title}`}
                     fill
                     className="object-cover"
@@ -74,7 +79,7 @@ export default function SeriesPage() {
                   {series.previewImages.map((image, index) => (
                     <div key={index} className="relative aspect-square w-full">
                       <Image
-                        src={`https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${image}`}
+                        src={getGitHubImageUrl(image) || "/placeholder.svg"}
                         alt={`Preview image ${index + 1} from ${series.title}`}
                         fill
                         className="object-cover"
@@ -99,13 +104,12 @@ export default function SeriesPage() {
       <footer className="py-12 px-6 md:px-12 border-t border-neutral-200">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
-            <h2 className="text-lg font-light tracking-widest">Lonso.jpg</h2>
+            <h2 className="text-lg font-light tracking-widest">RETRO LENS STUDIO</h2>
           </div>
           <div className="flex space-x-6">
             <Link href="https://www.instagram.com/lonso.jpg/" className="text-sm text-neutral-600 hover:text-black transition-colors">
               Instagram
             </Link>
-
           </div>
           <div className="mt-6 md:mt-0">
             <p className="text-xs text-neutral-500">© {new Date().getFullYear()} All Rights Reserved</p>
@@ -123,13 +127,8 @@ const photoSeries = [
     description: "A study of contrast and form through architectural elements and natural light.",
     year: "2023",
     count: 24,
-    featuredImage: "/shadow.jpg",
-    previewImages: [
-      "/shadow1.jpg",
-      "/shadow2.jpg",
-      "/shadow3.jpg",
-      "/shadow4.jpg",
-    ],
+    featuredImage: "/shadow2.jpg",
+    previewImages: ["/shadow3.jpg", "/shadow4.jpg", "/shadow5.jpg", "/shadow6.jpg"],
   },
   {
     id: "analog-memories",
@@ -138,12 +137,7 @@ const photoSeries = [
     year: "2022",
     count: 18,
     featuredImage: "/a.jpg",
-    previewImages: [
-      "/a1.jpg",
-      "/a2.jpg",
-      "/a3.jpg",
-      "/a4.jpg",
-    ],
+    previewImages: ["/a2.jpg", "/a3.jpg", "/a4.jpg", "/a5.jpg"],
   },
   {
     id: "urban-textures",
@@ -151,12 +145,8 @@ const photoSeries = [
     description: "Documenting the layers of history and human interaction in city environments.",
     year: "2021",
     count: 32,
-    featuredImage: "/b.jpg",
-    previewImages: [
-      "/b2.jpg",
-      "/b3.jpg",
-      "/b5.jpg",
-      "/b4.jpg",
-    ],
+    featuredImage: "/c.jpg",
+    previewImages: ["/c5.jpg", "/c4.jpg", "/c3.jpg", "/c2.jpg"],
   },
 ]
+

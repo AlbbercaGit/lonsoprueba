@@ -13,6 +13,14 @@ const nextConfig = {
   },
   images: {
     unoptimized: true, // Necesario para exportación estática
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        port: '',
+        pathname: '/AlbbercaGit/lonsoprueba/**',
+      },
+    ],
   },
   experimental: {
     webpackBuildWorker: true,

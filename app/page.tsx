@@ -3,6 +3,11 @@ import Link from "next/link"
 import { ChevronDown } from "lucide-react"
 
 export default function Home() {
+  // Función para construir la URL de GitHub para las imágenes
+  const getGitHubImageUrl = (path: string) => {
+    return `https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public${path}`
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="h-[10vh] py-6 px-6 md:px-12 flex justify-between items-center">
@@ -47,7 +52,7 @@ export default function Home() {
       <main className="flex-1 flex flex-col">
         <section className="relative h-[90vh] w-full">
           <Image
-            src="https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/lonso3.jpg"
+            src={getGitHubImageUrl("/lonso3.jpg") || "/placeholder.svg"}
             alt="Featured photograph"
             fill
             priority
@@ -74,7 +79,7 @@ export default function Home() {
               <Link href={`/series/${collection.slug}`} key={collection.slug} className="group">
                 <div className="relative aspect-[4/5] overflow-hidden">
                   <Image
-                    src={collection.coverImage || "/placeholder.svg"}
+                    src={getGitHubImageUrl(collection.coverImage) || "/placeholder.svg"}
                     alt={collection.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -113,22 +118,22 @@ export default function Home() {
 
 const featuredCollections = [
   {
-    title: "URBAN NOSTALGIA",
-    description: "City landscapes with a vintage touch",
+    title: "SHADOWS & LIGHT",
+    description: "A study of contrast and form through architectural elements and natural light",
     slug: "shadows-and-light",
-    coverImage: "https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/lonso7.jpg",
+    coverImage: "/lonso7.jpg",
   },
   {
-    title: "ANALOG DREAMS",
-    description: "Film photography series",
+    title: "ANALOG MEMORIES",
+    description: "Shot entirely on 35mm film, this series explores nostalgia through vintage techniques",
     slug: "analog-memories",
-    coverImage: "https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/lonso6.jpg",
+    coverImage: "/lonso6.jpg",
   },
   {
-    title: "TIMELESS PORTRAITS",
-    description: "Character studies across generations",
+    title: "URBAN TEXTURES",
+    description: "Documenting the layers of history and human interaction in city environments",
     slug: "urban-textures",
-    coverImage: "https://raw.githubusercontent.com/AlbbercaGit/lonsoprueba/refs/heads/main/public/lonso4.jpg",
+    coverImage: "/lonso4.jpg",
   },
 ]
 
